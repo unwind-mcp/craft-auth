@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "craft-auth"
+version = "4.2.0"
+description = "Cryptographic Relay Authentication for Faithful Transmission — transport-layer command provenance and anti-spoofing for AI agents."
+readme = "README.md"
+license = "AGPL-3.0-or-later"
+requires-python = ">=3.9"
+authors = [
+    {name = "David Russell"},
+]
+keywords = [
+    "cryptography",
+    "authentication",
+    "command-provenance",
+    "anti-replay",
+    "anti-spoofing",
+    "ai-agents",
+    "mcp",
+    "audit",
+    "hash-chain",
+    "hmac",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security :: Cryptography",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/unwind-mcp/craft-auth"
+Documentation = "https://github.com/unwind-mcp/craft-auth#readme"
+Repository = "https://github.com/unwind-mcp/craft-auth"
+Issues = "https://github.com/unwind-mcp/craft-auth/issues"
+
+[tool.setuptools.packages.find]
+include = ["craft*"]
