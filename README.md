@@ -106,6 +106,51 @@ assert result.accepted  # True — envelope is authentic and in sequence
 
 The state commitment formula is the critical piece: each envelope's commit chains to the previous one via `HMAC(k_state, prev_commit || mac)`. This is what makes the chain tamper-evident — modifying or removing any envelope breaks every subsequent commitment.
 
+## Capability Tokens (Scoped Tool Authorization)
+
+For privileged operations, issue a short-lived token that binds a specific tool call to an authenticated session:
+
+```python
+from craft import CapabilityIssuer, ToolCall, b64url_encode
+
+# Create issuer using the session's capability keys
+issuer = CapabilityIssuer(cap_keys_by_epoch=session.cap_keys_by_epoch)
+
+# Mint a token scoped to a specific tool and target
+token = issuer.mint_capability(
+    session=session,
+    subject=session.account_id,
+    allowed_tools=["fs_write"],
+    arg_constraints={"exact": {"path": "/tmp/config.json"}},
+    target_constraints={"type": "exact", "value": "/tmp/config.json"},
+    bind_seq=1,
+    state_commit_at_issue=b64url_encode(session.last_state_commit["c2p"]),
+    purpose="write config file",
+)
+
+# Enforce at dispatch — does the token authorize this call?
+tool_call = ToolCall(
+    session_id=session.session_id,
+    account_id=session.account_id,
+    channel_id=session.channel_id,
+    conversation_id=session.conversation_id,
+    context_type=session.context_type,
+    subject=session.account_id,
+    seq=1,
+    direction="c2p",
+    tool_id="fs_write",
+    args={"path": "/tmp/config.json"},
+    target="/tmp/config.json",
+)
+
+decision = issuer.enforce_at_tool_dispatch(
+    token=token, tool_call=tool_call, session=session,
+)
+assert decision.allowed  # True — token is valid and scoped correctly
+```
+
+Tokens are single-use by default, HMAC-authenticated, epoch-bound, and expire after 60 seconds.
+
 ## What It Does
 
 CRAFT wraps every command in an HMAC envelope that cryptographically binds it to a session, a sequence number, and the full history of prior commands. The verifier checks each envelope before admitting it into your agent's execution pipeline.
