@@ -8,6 +8,8 @@ It is a standalone Python library with zero dependencies — pure stdlib, instal
 
 Requires Python 3.9+.
 
+> Standalone library extracted from the [UNWIND monorepo](https://github.com/unwind-mcp/unwind) (250+ commits, 1,859 tests). Full development history lives there.
+
 ## Quick Start
 
 ```bash
