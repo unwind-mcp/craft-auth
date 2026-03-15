@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "craft-auth"
-version = "4.2.0"
+version = "4.2.1"
 description = "Cryptographic Relay Authentication for Faithful Transmission — transport-layer command provenance and anti-spoofing for AI agents."
 readme = "README.md"
 license = "AGPL-3.0-or-later"
