@@ -16,6 +16,15 @@ Requires Python 3.9+.
 pip install craft-auth
 ```
 
+See it in action (zero config, nothing modified):
+
+```bash
+pip install craft-auth
+craft-auth demo
+```
+
+Runs 4 scenarios in your terminal: valid envelope verification, tamper detection, hash chain integrity, and scoped capability tokens. Add `--json` for structured output.
+
 ```python
 from craft import derive_session_keys, state_commit_0, CraftVerifier, CraftSessionState
 
