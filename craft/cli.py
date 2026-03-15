@@ -137,6 +137,7 @@ def run_demo(as_json: bool = False) -> bool:
 
     if not as_json:
         print(f"\n{_CYAN}\u25b8 Scenario 1: Valid envelope{_RESET}")
+        print(f"  {_DIM}Can we prove a command is authentic and hasn't been modified?{_RESET}")
         _print_detail("Tool", "fs_read")
         _print_detail("Target", "/tmp/data.txt")
         _print_detail("MAC", f"{_trunc(mac1)}  (HMAC-SHA256)")
@@ -171,6 +172,7 @@ def run_demo(as_json: bool = False) -> bool:
 
     if not as_json:
         print(f"\n{_CYAN}\u25b8 Scenario 2: Tampered payload{_RESET}")
+        print(f"  {_DIM}What happens if an attacker modifies a command in transit?{_RESET}")
         _print_detail("Modified", 'path "/tmp/data.txt" \u2192 "/etc/shadow"')
         _print_detail("MAC", f"{tampered2['mac'][:8]}...  {_DIM}(unchanged \u2014 attacker can't recompute){_RESET}")
 
@@ -192,6 +194,7 @@ def run_demo(as_json: bool = False) -> bool:
 
     if not as_json:
         print(f"\n{_CYAN}\u25b8 Scenario 3: Hash chain (3 envelopes){_RESET}")
+        print(f"  {_DIM}Can we detect if someone deletes or reorders commands from the log?{_RESET}")
 
     for i in range(1, 4):
         env_c, mac_c, commit_c = _build_envelope(
@@ -301,6 +304,7 @@ def run_demo(as_json: bool = False) -> bool:
 
     if not as_json:
         print(f"\n{_CYAN}\u25b8 Scenario 4: Capability token (scoped authorization){_RESET}")
+        print(f"  {_DIM}Can we restrict a tool to a specific file, with a time limit and single use?{_RESET}")
         _print_detail("Token", f"{token.cap_id[:12]}... (TTL=60s, single-use)")
         _print_detail("Scope", "fs_write \u2192 /tmp/config.json")
 
